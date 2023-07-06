@@ -33,8 +33,8 @@ R"(SAS7BDAT file reader
 )";
 }
 
-void sas7bdat_to_csv(const char* _filename_sas7bdat,
-                     const char* _filename_csv)
+void sas7bdat_to_csv(cconst std::string& _filename_sas7bdat,
+                     const std::string& _filename_csv)
 {
 	std::ofstream csv_os(_filename_csv);
 	cppsas7bdat::Reader(
