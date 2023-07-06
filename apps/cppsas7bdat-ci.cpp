@@ -22,6 +22,7 @@ R"(SAS7BDAT file reader
        cppsas7bdat-ci print [--nlines=<lines>] <file>...
        cppsas7bdat-ci csv <file>...
        cppsas7bdat-ci null <file>...
+       cppsas7bdat-ci convert_csv <file-in> <file-out>
        cppsas7bdat-ci (-h|--help)
        cppsas7bdat-ci (-v|--version)
 
@@ -30,6 +31,14 @@ R"(SAS7BDAT file reader
        -v --version                 Show version.
        -n=<lines> --nlines=<lines>  Read at most n lines
 )";
+}
+
+void sas7bdat_to_csv(const char* _filename_sas7bdat,
+                     const char* _filename_csv)
+{
+	std::ofstream csv_os(_filename_csv);
+	cppsas7bdat::Reader(
+		cppsas7bdat::datasource::ifstream(_filename_sas7bdat), cppsas7bdat::datasink::csv(csv_os)).read_all();
 }
 
 void process_print(const std::string& _filename, long _n)
@@ -85,6 +94,12 @@ int main(const int argc, char* argv[])
     const auto files = args["<file>"].asStringList();
     for(const auto& file: files) {
       process_csv(file);
+    }
+  } else if(args["convert_csv"].asBool()) {
+    const auto files = args["<file>"].asStringList();
+    printf("%s", files)
+    for(const auto& file: files) {
+      sas7bdat_to_csv(file);
     }
   } else if(args["null"].asBool()) {
     const auto files = args["<file>"].asStringList();
