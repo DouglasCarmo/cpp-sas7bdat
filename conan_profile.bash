@@ -2,5 +2,5 @@
 
 echo "Creating package profile"
 conan profile new package --detect
-conan profile update settings.compiler.libcxx=libstdc++11 package
+conan profile update env.CXX=clang++-9 default
 conan profile show package
