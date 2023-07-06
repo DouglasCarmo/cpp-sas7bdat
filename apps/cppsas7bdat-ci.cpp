@@ -69,9 +69,9 @@ void process_null(const std::string& _filename)
 void sas7bdat_to_csv(const std::string& _filename)
 {
   const std::string _filename_csv = get_csv_filename(_filename)
-	std::ofstream csv_os(_filename_csv);
+	std::ofstream csv_os(_filename);
 	cppsas7bdat::Reader(
-		cppsas7bdat::datasource::ifstream(_filename_sas7bdat), cppsas7bdat::datasink::csv(csv_os)).read_all();
+		cppsas7bdat::datasource::ifstream(_filename), cppsas7bdat::datasink::csv(csv_os)).read_all();
 }
 
 int main(const int argc, char* argv[])
