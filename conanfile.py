@@ -19,7 +19,7 @@ class CppSAS7BDATProject(ConanFile):
         "docopt.cpp/0.6.3",
         "fmt/8.0.1",
         "spdlog/1.9.2",
-        "boost/1.71.0",
+        "boost/1.74.0",
         "nlohmann_json/3.10.4"
     )
     exports_sources = "CMakeLists.txt", "src/*", "include/*", "apps/*", "test/*", "conanfile.py", "cmake/*"
@@ -48,7 +48,6 @@ class CppSAS7BDATProject(ConanFile):
         self.cpp_info.includedirs = ["include"]
         self.cpp_info.libdirs = ["lib"]
         self.cpp_info.bindirs = ["bin"]
-
         self.cpp_info.libs = ["cppsas7bdat"]
 
 
