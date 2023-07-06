@@ -97,7 +97,7 @@ int main(const int argc, char* argv[])
     }
   } else if(args["convert_csv"].asBool()) {
     const auto files = args["<file>"].asStringList();
-    printf("%s", files)
+    printf("%s", files);
     for(const auto& file: files) {
       sas7bdat_to_csv(file);
     }
