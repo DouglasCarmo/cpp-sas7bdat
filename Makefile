@@ -25,3 +25,15 @@ build-debug:
 .PHONY: clean
 clean:
 	make -C build clean
+
+.PHONY: pyenv pyenv-download pyenv-python pyenv-venv
+ pyenv: pyenv-download pyenv-python pyenv-venv
+
+ pyenv-download:
+ 	curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+ pyenv-python:
+ 	export PYTHON_CONFIGURE_OPTS="--enable-shared"; ~/.pyenv/bin/pyenv install --force $(PYTHON_VERSION)
+
+ pyenv-venv:
+ 	~/.pyenv/bin/pyenv virtualenv -p python3.8 $(PYTHON_VERSION) $(VENV_NAME)
