@@ -1,34 +1,14 @@
 all: build
 
-TESTS :=
-OPTIONS :=
-
 BUILD_TYPE := Release
 PYTHON_VERSION := 3.8.12
 VENV_NAME := venv38
 ENABLE_CONAN := ON
-ENABLE_COVERAGE := OFF
-ENABLE_SANITIZER_ADDRESS := OFF
-ENABLE_SANITIZER_LEAK := OFF
-ENABLE_SANITIZER_UNDEFINED_BEHAVIOR := OFF
-ENABLE_SANITIZER_THREAD := OFF
-ENABLE_SANITIZER_MEMORY := OFF
-ENABLE_R := OFF
-ENABLE_TESTING := OFF
 ENABLE_PYTHON := OFF
-PIP_OPTIONS := --user
 
 .PHONY: configure
 configure:
 	cmake -S . -B ./build -DENABLE_CONAN:BOOL=${ENABLE_CONAN} -DCMAKE_BUILD_TYPE:STRING=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" \
-	-DENABLE_R:BOOL=${ENABLE_R} \
-	-DENABLE_COVERAGE:BOOL=${ENABLE_COVERAGE} \
-	-DENABLE_SANITIZER_ADDRESS:BOOL=${ENABLE_SANITIZER_ADDRESS} \
-	-DENABLE_SANITIZER_LEAK:BOOL=${ENABLE_SANITIZER_LEAK} \
-	-DENABLE_SANITIZER_UNDEFINED_BEHAVIOR:BOOL=${ENABLE_SANITIZER_UNDEFINED_BEHAVIOR} \
-	-DENABLE_SANITIZER_THREAD:BOOL=${ENABLE_SANITIZER_THREAD} \
-	-DENABLE_SANITIZER_MEMORY:BOOL=${ENABLE_SANITIZER_MEMORY} \
-	-DENABLE_TESTING:BOOL=${ENABLE_TESTING} \
 	-DENABLE_PYTHON:BOOL=${ENABLE_PYTHON}
 
 .PHONY: build
@@ -38,19 +18,6 @@ build: configure
 .PHONY: build-python
 build-python: configure pyenv-init
 
-.PHONY: build-R
-build-R:
-	make -C R build
-
-.PHONY: build-sanitizer
-build-sanitizer:
-	make -C . build BUILD_TYPE=RelWithDebInfo ENABLE_SANITIZER_ADDRESS=ON
-
-.PHONY: tests
-tests:
-	cd ./build; ctest -C ${BUILD_TYPE} --output-on-failure ${TESTS}
-	#make -C build test ARGS='-V'
-
 .PHONY: build-debug
 build-debug:
 	mkdir -p build-debug; cd build-debug; cmake -DCMAKE_BUILD_TYPE=Debug ..; cmake --build .
@@ -58,74 +25,3 @@ build-debug:
 .PHONY: clean
 clean:
 	make -C build clean
-
-.PHONY: pyenv pyenv-download pyenv-python pyenv-venv
-pyenv: pyenv-download pyenv-python pyenv-venv
-
-pyenv-download:
-	curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-
-pyenv-python:
-	export PYTHON_CONFIGURE_OPTS="--enable-shared"; ~/.pyenv/bin/pyenv install --force $(PYTHON_VERSION)
-
-pyenv-venv:
-	~/.pyenv/bin/pyenv virtualenv -p python3.8 $(PYTHON_VERSION) $(VENV_NAME)
-
-pyenv-activate:
-	source $PYENV_VIRTUAL_ENV/bin/activate
-
-pyenv-init:
-	#source $(PYENV_VIRTUAL_ENV)/bin/activate
-	#python3 setup.py develop
-	pip3 install -e .
-
-.PHONY: tests-python tests-python-install tests-python-run
-
-tests-python-install:
-	pip3 install -e ".[tests]"
-
-tests-python-run:
-	coverage run --source pycppsas7bdat -m py.test $(OPTIONS) $(TESTS) --junitxml=./reports/pytest.xml
-
-tests-python: tests-python-install tests-python-run
-	coverage report --show-missing
-	coverage html	
-	coverage xml -o build/coverage-python.xml
-
-.PHONY: tests-R
-tests-R: build-R
-	cd test; Rscript testthat.R
-
-.PHONY: lint
-lint:
-	yamllint -f colored .github
-
-.PHONY: conan conan-install conan-setup
-conan: conan-install conan-setup
-
-conan-install:
-	python3 -m pip install $(PIP_OPTIONS) --upgrade pip
-	#pip3 install $(PIP_OPTIONS) --upgrade pip
-	pip3 install $(PIP_OPTIONS) wheel setuptools gcovr==5.0 numpy cmaketools
-	pip3 install $(PIP_OPTIONS) conan --upgrade
-
-conan-setup:
-	conan install conanfile.py --build=missing
-
-.PHONY: benchmark
-benchmark:
-	make -C benchmark
-
-
-.PHONY: clang-tidy
-clang-tidy:
-	clang-tidy -p build $(shell find src -type f -name *.cpp) include/cppsas7bdat/reader.hpp -extra-arg=-std=c++17  -checks=-*,clang-analyzer-*,-clang-analyzer-cplusplus* -- -I include -I build
-
-.PHONY: clang-format
-clang-format:
-	clang-format -i --style=LLVM $(shell find include src R python -type f -name *pp)
-
-conan-package:
-	./conan_profile.bash
-	rm -fr ./tmp ./test_package/build
-	./conan_package.bash
