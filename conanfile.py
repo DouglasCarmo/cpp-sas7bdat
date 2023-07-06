@@ -1,5 +1,5 @@
-from conans import ConanFile, tools, CMake
-from conan.tools.cmake import CMakeToolchain, cmake_layout
+from conans import ConanFile, CMake
+from conan.tools.cmake import CMakeToolchain
 
 class CppSAS7BDATProject(ConanFile):
     name = "cppsas7bdat"
@@ -65,12 +65,10 @@ class CppSAS7BDATProject(ConanFile):
         self.options["boost"].without_filesystem = True
         self.options["boost"].without_graph = True
         self.options["boost"].without_iostreams = True
-        #self.options["boost"].without_json = True
         self.options["boost"].without_locale = True
         self.options["boost"].without_log = True
         self.options["boost"].without_math = True
         self.options["boost"].without_mpi = True
-        #self.options["boost"].without_nowide = True
         self.options["boost"].without_program_options = True
         self.options["boost"].without_random = True
         self.options["boost"].without_regex = True
