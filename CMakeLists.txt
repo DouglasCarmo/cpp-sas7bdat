@@ -4,10 +4,9 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 project(
   cppsas7bdat
   VERSION 1.0.1
-  DESCRIPTION "A C++11 SAS7BDAT reader library"
+  DESCRIPTION "A C++17 SAS7BDAT reader library"
   LANGUAGES CXX
   )
-
 
 file(WRITE version.txt ${PROJECT_VERSION})
 
@@ -37,7 +36,7 @@ else()
 endif()
 
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_compile_definitions(BOOST_DATE_TIME_NO_LIB)
