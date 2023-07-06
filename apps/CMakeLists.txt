@@ -5,9 +5,8 @@ find_package(docopt REQUIRED)
 #message (STATUS ${DOCOPT_INCLUDE_DIRS})
 #include_directories(${DOCOPT_INCLUDE_DIRS})
 
-add_executable(cppsas7bdat-ci
-    cppsas7bdat-ci.cpp
-    )
+add_executable(cppsas7bdat-ci cppsas7bdat-ci.cpp)
+
 target_link_libraries(cppsas7bdat-ci
   PRIVATE docopt::docopt
   PRIVATE fmt::fmt
