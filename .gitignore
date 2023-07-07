@@ -16,3 +16,5 @@ dist
 R/CPPSAS7BDAT/DESCRIPTION
 version.txt
 tmp
+.vscode/
+.DS_Store
