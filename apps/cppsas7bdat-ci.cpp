@@ -20,8 +20,6 @@ R"(SAS7BDAT file reader
 
      Usage:
        cppsas7bdat-ci print [--nlines=<lines>] <file>...
-       cppsas7bdat-ci csv <file>...
-       cppsas7bdat-ci null <file>...
        cppsas7bdat-ci convert_csv <file>...
        cppsas7bdat-ci (-h|--help)
        cppsas7bdat-ci (-v|--version)
@@ -51,27 +49,14 @@ std::string get_csv_filename(const std::string& _filename)
   return _filename + "csv";
 }
 
-void process_csv(const std::string& _filename)
-{
-  const auto csv_filename = get_csv_filename(_filename);
-  //std::ofstream csv_os(csv_filename.c_str());
-  //cppsas7bdat::Reader reader(cppsas7bdat::datasource::ifstream(_filename.c_str()), cppsas7bdat::datasink::csv(csv_os));
-  cppsas7bdat::Reader reader(cppsas7bdat::datasource::ifstream(_filename.c_str()), cppsas7bdat::datasink::csv(_filename.c_str()));
-  reader.read_all();
-}
-
-void process_null(const std::string& _filename)
-{
-  cppsas7bdat::Reader reader(cppsas7bdat::datasource::ifstream(_filename.c_str()), cppsas7bdat::datasink::null());
-  reader.read_all();
-}
-
 void sas7bdat_to_csv(const std::string& _filename)
 {
   const auto csv_filename = get_csv_filename(_filename);
-	std::ofstream csv_os (_filename, std::ofstream::out);
-	// cppsas7bdat::Reader(
-	// 	cppsas7bdat::datasource::ifstream(_filename), cppsas7bdat::datasink::csv(csv_os)).read_all();
+  std::cout << _filename << std::endl;
+  std::cout << csv_filename << std::endl;
+	std::ofstream csv_os (csv_filename, std::ofstream::out);
+	cppsas7bdat::Reader(
+	  cppsas7bdat::datasource::ifstream(_filename.c_str()), cppsas7bdat::datasink::csv(csv_os)).read_all();
 }
 
 int main(const int argc, char* argv[])
@@ -91,20 +76,10 @@ int main(const int argc, char* argv[])
     for(const auto& file: files) {
       process_print(file, n);
     }
-  } else if(args["csv"].asBool()) {
-    const auto files = args["<file>"].asStringList();
-    for(const auto& file: files) {
-      process_csv(file);
-    }
   } else if(args["convert_csv"].asBool()) {
     const auto files = args["<file>"].asStringList();
     for(const auto& file: files) {
       sas7bdat_to_csv(file);
-    }
-  } else if(args["null"].asBool()) {
-    const auto files = args["<file>"].asStringList();
-    for(const auto& file: files) {
-      process_null(file);
     }
   }
   return 0;
