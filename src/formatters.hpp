@@ -179,7 +179,7 @@ struct DateFormatter : public DoubleFormatter<_endian> {
   STRING to_string(const void *_p) const {
     std::cout << "" << std::endl << std::endl;
     std::cout << "ok-debug" << std::endl; 
-    std::cout << "_p: " << _p << std::endl; 
+    std::cout << "_p: " << *_p << std::endl; 
     std::cout << get_date(_p) << std::endl; 
     std::cout <<  boost::gregorian::to_iso_extended_string(get_date(_p)) 
       << std::endl << std::endl; 
