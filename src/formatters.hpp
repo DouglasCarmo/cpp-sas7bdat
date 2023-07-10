@@ -184,8 +184,7 @@ struct DateFormatter : public DoubleFormatter<_endian> {
       return "";
     }else{
       const std::string date_fmt = cppsas7bdat::to_string(date);
-      std::cout << "formated -date = " << date_fmt << std::endl;
-      return str_date;
+      return date_fmt;
     }
   }
 };
