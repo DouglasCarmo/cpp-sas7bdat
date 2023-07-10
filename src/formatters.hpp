@@ -169,6 +169,7 @@ struct DateFormatter : public DoubleFormatter<_endian> {
     const auto _number = INTERNAL::get_date_from_epoch(
         DoubleFormatter<_endian>::get_number(_p));
     std::cout << "get_date: " << _number << std::endl;
+    std::cout << "get_number: " << DoubleFormatter<_endian>::get_number(_p) << std::endl;
     return _number;
   }
 
