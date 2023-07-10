@@ -44,7 +44,6 @@ struct IFormatter {
 
   const uint8_t *data(const void *_p) const noexcept {
     const uint8_t *p = reinterpret_cast<const uint8_t *>(_p) + offset;
-    std::cout << "data" << *p << std::endl;
     return p;
   }
 };
@@ -179,13 +178,13 @@ struct DateFormatter : public DoubleFormatter<_endian> {
   TIME get_time([[maybe_unused]] const void *_p) const noexcept { return {}; }
 
   STRING to_string(const void *_p) const {
-    std::cout << "" << std::endl << std::endl;
-    std::cout << "ok-debug" << std::endl; 
-    const auto str_date = boost::gregorian::to_iso_extended_string(get_date(_p));
-    std::cout << "end-debug" << std::endl; 
+    const DATE date = get_date(_p);
+    const auto str_date = boost::gregorian::to_iso_extended_string(date);
     if (!str_date.compare("not-a-date-time")){
       return "";
     }else{
+      const std::string date_fmt = cppsas7bdat::to_string(date);
+      std::cout << "formated -date = " << date_fmt << std::endl;
       return str_date;
     }
   }
@@ -208,7 +207,6 @@ struct TimeFormatter : public DoubleFormatter<_endian> {
   }
 
   STRING to_string(const void *_p) const {
-    // std::cout << "ok-debug" << std::endl; 
     return boost::posix_time::to_simple_string(get_time(_p));
   }
 };
