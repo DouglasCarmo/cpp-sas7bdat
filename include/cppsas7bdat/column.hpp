@@ -98,7 +98,7 @@ public:
   NUMBER get_number(PBUF _p) const { return pimpl->get_number(_p); }
   INTEGER get_integer(PBUF _p) const { return pimpl->get_integer(_p); }
   DATETIME get_datetime(PBUF _p) const { return pimpl->get_datetime(_p); }
-  DATE get_date(PBUF _p) const { return pimpl->get_date(_p); }
+  STRING get_date(PBUF _p) const { return pimpl->to_string(_p); }
   TIME get_time(PBUF _p) const { return pimpl->get_time(_p); }
 
   STRING to_string(PBUF _p) const { return pimpl->to_string(_p); }
