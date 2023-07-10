@@ -44,6 +44,7 @@ struct IFormatter {
 
   const uint8_t *data(const void *_p) const noexcept {
     const uint8_t *p = reinterpret_cast<const uint8_t *>(_p) + offset;
+    std::cout << "data" << p << std::endl;
     return p;
   }
 };
@@ -168,8 +169,6 @@ struct DateFormatter : public DoubleFormatter<_endian> {
   DATE get_date([[maybe_unused]] const void *_p) const noexcept {
     const auto _number = INTERNAL::get_date_from_epoch(
         DoubleFormatter<_endian>::get_number(_p));
-    std::cout << "get_date: " << _number << std::endl;
-    std::cout << "get_number: " << DoubleFormatter<_endian>::get_number(_p) << std::endl;
     return _number;
   }
 
