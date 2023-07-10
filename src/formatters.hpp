@@ -184,8 +184,7 @@ struct DateFormatter : public DoubleFormatter<_endian> {
     std::cout <<  boost::gregorian::to_iso_extended_string(get_date(_p)) 
       << std::endl << std::endl; 
 
-    return cppsas7bdat::to_string(get_date(
-        _p)); // boost::gregorian::to_iso_extended_string(get_date(_p));
+    return boost::gregorian::to_iso_extended_string(get_date(_p));
   }
 };
 
