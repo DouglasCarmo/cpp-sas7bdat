@@ -35,9 +35,8 @@ std::string to_string(DATETIME _x) {
 std::string to_string(DATE _x) {
   char szBuffer[16];
   size_t size{0};
-  std::cout << _x;
-  auto r = fmt::format_to_n(szBuffer, sizeof(szBuffer), "{:04}-{:02}-{:02}",
-                            _x.year(), _x.month(), _x.day());
+  auto r = fmt::format_to_n(szBuffer, sizeof(szBuffer), "{:02}/{:02}/{:04}",
+                            _x.day(), _x.month(), _x.year());
   size = r.size;
   return std::string(szBuffer, size);
 }
