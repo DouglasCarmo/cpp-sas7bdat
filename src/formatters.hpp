@@ -159,37 +159,17 @@ struct DateTimeFormatter : public DoubleFormatter<_endian> {
 };
 
 template <Endian _endian>
-struct DateFormatter : public DoubleFormatter<_endian> {
+struct DateFormatter : public IFormatter {
   DateFormatter(const size_t _offset, const size_t _length)
-      : DoubleFormatter<_endian>(_offset, _length, Type::date) {
-    D(spdlog::debug("DateTimeFormatter\n"));
+      : IFormatter(_offset, _length, Type::string) {
+    D(spdlog::debug("DateFormatter\n"));
   }
 
-  DATE get_date([[maybe_unused]] const void *_p) const noexcept {
-    return INTERNAL::get_date_from_epoch(
-        DoubleFormatter<_endian>::get_number(_p));
+  SV get_string(const void *_p) const noexcept {
+    return INTERNAL::get_string_trim_0(data(_p), length);
   }
 
-  DATETIME get_datetime([[maybe_unused]] const void *_p) const noexcept {
-    return DATETIME(get_date(_p), {});
-  }
-
-  TIME get_time([[maybe_unused]] const void *_p) const noexcept { return {}; }
-
-  STRING to_string(const void *_p) const {
-    std::cout << "" << std::endl << std::endl;
-    std::cout << "ok-debug" << std::endl; 
-    std::cout << "_p: " << *_p << std::endl; 
-    std::cout << get_date(_p) << std::endl; 
-    std::cout <<  boost::gregorian::to_iso_extended_string(get_date(_p)) 
-      << std::endl << std::endl; 
-    const auto str_date = boost::gregorian::to_iso_extended_string(get_date(_p));
-    if (!str_date.compare("not-a-date-time")){
-      return "";
-    }else{
-      return str_date;
-    }
-  }
+  STRING to_string(const void *_p) const { return STRING(get_string(_p)); }
 };
 
 template <Endian _endian>
