@@ -44,7 +44,7 @@ struct IFormatter {
 
   const uint8_t *data(const void *_p) const noexcept {
     const uint8_t *p = reinterpret_cast<const uint8_t *>(_p) + offset;
-    std::cout << "data" << p << std::endl;
+    std::cout << "data" << *p << std::endl;
     return p;
   }
 };
