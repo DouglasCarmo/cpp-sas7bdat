@@ -182,7 +182,12 @@ struct DateFormatter : public DoubleFormatter<_endian> {
     // std::cout << get_date(_p) << std::endl; 
     // std::cout <<  boost::gregorian::to_iso_extended_string(get_date(_p)) 
     //   << std::endl << std::endl; 
-    return boost::gregorian::to_iso_extended_string(get_date(_p));
+    const auto str_date = boost::gregorian::to_iso_extended_string(get_date(_p));
+    if (!str_date.compare("not-a-date-time")){
+      return "";
+    }else{
+      return str_date;
+    }
   }
 };
 
