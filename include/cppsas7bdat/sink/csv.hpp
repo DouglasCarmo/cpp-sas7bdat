@@ -61,7 +61,7 @@ struct csv {
       case cppsas7bdat::Column::Type::date:
         auto date = column.get_date(_p);
         if (!std::strcmp(date, "not-a-date-time")){
-            date = _p
+            date = column.get_string(_p)
         }
         print(date);
         break;
