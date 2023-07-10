@@ -44,7 +44,7 @@ struct csv {
       if (first)
         first = false;
       else
-        fmt::print(os, ",");
+        fmt::print(os, "|");
       switch (column.type) {
       case cppsas7bdat::Column::Type::string:
         print(column.get_string(_p));

@@ -32,9 +32,7 @@ private:
     virtual DATETIME get_datetime(PBUF _p) const = 0;
     virtual DATE get_date(PBUF _p) const = 0;
     virtual TIME get_time(PBUF _p) const = 0;
-
     virtual STRING to_string(PBUF _p) const = 0;
-
     virtual size_t length() const noexcept = 0;
   };
 
@@ -100,14 +98,14 @@ public:
   DATETIME get_datetime(PBUF _p) const { return pimpl->get_datetime(_p); }
   STRING get_date(PBUF _p) const { return pimpl->to_string(_p); }
   TIME get_time(PBUF _p) const { return pimpl->get_time(_p); }
-
   STRING to_string(PBUF _p) const { return pimpl->to_string(_p); }
-
   size_t length() const noexcept { return pimpl->length(); }
 
 private:
   PIMPL pimpl;
 };
+
+
 static_assert(std::is_copy_constructible_v<Column>, "Column is not copyable");
 static_assert(!std::is_copy_assignable_v<Column>, "Column is copy-assignable");
 static_assert(std::is_move_constructible_v<Column>, "Column is not movable");
