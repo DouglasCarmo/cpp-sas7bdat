@@ -171,8 +171,7 @@ inline DATE get_date_from_epoch_days(const double _days) noexcept {
     return DATE(not_a_date_time);
   
   ptime start(boost::gregorian::date(1960, 1, 1));
-  std::cout << (start + days(std::lround(_days))).date() << std::endl;
-  std::cout << std::string to_iso_extended_string((start + days(std::lround(_days))).date()) << std::endl;
+  // std::cout << (start + days(std::lround(_days))).date() << std::endl;
   return (start + days(std::lround(_days))).date();
 }
 
