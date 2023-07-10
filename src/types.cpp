@@ -37,9 +37,7 @@ std::string to_string(DATE _x) {
   size_t size{0};
   auto r = fmt::format_to_n(szBuffer, sizeof(szBuffer), "{:02}/{:02}/{:04}",
                             _x.day(), _x.month(), _x.year());
-  std::ostream &os;
-
-  fmt::print(os, _x);
+  std::cout << _x;
   size = r.size;
   return std::string(szBuffer, size);
 }
