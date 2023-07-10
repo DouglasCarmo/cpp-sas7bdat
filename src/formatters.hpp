@@ -168,7 +168,7 @@ struct DateFormatter : public DoubleFormatter<_endian> {
   DATE get_date([[maybe_unused]] const void *_p) const noexcept {
     const auto _number = INTERNAL::get_date_from_epoch(
         DoubleFormatter<_endian>::get_number(_p));
-    std::cout << _number << std::endl;
+    std::cout << "get_date: " << _number << std::endl;
     return _number;
   }
 
@@ -181,10 +181,8 @@ struct DateFormatter : public DoubleFormatter<_endian> {
   STRING to_string(const void *_p) const {
     std::cout << "" << std::endl << std::endl;
     std::cout << "ok-debug" << std::endl; 
-    std::cout << get_date(_p) << std::endl; 
-    std::cout <<  boost::gregorian::to_iso_extended_string(get_date(_p)) 
-      << std::endl << std::endl; 
     const auto str_date = boost::gregorian::to_iso_extended_string(get_date(_p));
+    std::cout << "end-debug" << std::endl; 
     if (!str_date.compare("not-a-date-time")){
       return "";
     }else{
