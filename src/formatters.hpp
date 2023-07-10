@@ -154,8 +154,7 @@ struct DateTimeFormatter : public DoubleFormatter<_endian> {
   }
 
   STRING to_string(const void *_p) const {
-    return cppsas7bdat::to_string(get_datetime(
-        _p)); // boost::posix_time::to_iso_extended_string(get_datetime(_p));
+    return boost::posix_time::to_iso_extended_string(get_datetime(_p));
   }
 };
 
@@ -204,9 +203,8 @@ struct TimeFormatter : public DoubleFormatter<_endian> {
   }
 
   STRING to_string(const void *_p) const {
-    std::cout << "ok-debug" << std::endl; 
-    return cppsas7bdat::to_string(
-        get_time(_p)); // boost::posix_time::to_simple_string(get_time(_p));
+    // std::cout << "ok-debug" << std::endl; 
+    return boost::posix_time::to_simple_string(get_time(_p));
   }
 };
 
