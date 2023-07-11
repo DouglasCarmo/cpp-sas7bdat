@@ -3,6 +3,7 @@ FROM --platform=linux/amd64 debian:stable-slim
 RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get -y install  \
+    software-properties-common \
     libxml2-dev \ 
     python3-dev \
     build-essential \ 
@@ -33,7 +34,12 @@ RUN apt-get -y install  \
     libdocopt0 \
     nano \
     wget \
-    ccache
+    ccache 
+
+
+# Install OpenJDK-11
+RUN apt-get update && \
+    apt-get install -y default-jdk
 
 ENV PYTHONPATH "/bin/python3"
 
