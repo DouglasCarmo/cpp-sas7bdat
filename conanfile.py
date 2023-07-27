@@ -15,11 +15,8 @@ class CppSAS7BDATProject(ConanFile):
     generators = "cmake", "gcc", "txt", "cmake_find_package", "cmake_find_package_multi"
     build_policy = "missing"
     requires = (
-        "catch2/2.13.6",
-        "docopt.cpp/0.6.3",
-        "fmt/8.0.1",
-        "spdlog/1.9.2",
-        "nlohmann_json/3.10.4"
+        "fmt/8.1.1",
+        "spdlog/1.11.0",
     )
     exports_sources = "CMakeLists.txt", "src/*", "include/*", "apps/*", "test/*", "conanfile.py", "cmake/*"
 

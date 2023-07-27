@@ -11,25 +11,6 @@
 #include <cppsas7bdat/source/ifstream.hpp>
 #include <cppsas7bdat/sink/print.hpp>
 #include <cppsas7bdat/sink/csv.hpp>
-#include <cppsas7bdat/sink/null.hpp>
-#include <docopt/docopt.h>
-
-namespace {
-  static constexpr auto USAGE =
-R"(SAS7BDAT file reader
-
-     Usage:
-       cppsas7bdat-ci print [--nlines=<lines>] <file>...
-       cppsas7bdat-ci convert_csv <file>...
-       cppsas7bdat-ci (-h|--help)
-       cppsas7bdat-ci (-v|--version)
-
-     Options:
-       -h --help                    Show this screen.
-       -v --version                 Show version.
-       -n=<lines> --nlines=<lines>  Read at most n lines
-)";
-}
 
 
 void process_print(const std::string& _filename, long _n)
@@ -61,26 +42,17 @@ void sas7bdat_to_csv(const std::string& _filename)
 
 int main(const int argc, char* argv[])
 {
-  std::string version = fmt::format("CPP SAS7BDAT file reader {}", cppsas7bdat::getVersion());
-  std::map<std::string, docopt::value> args = docopt::docopt(USAGE,
-							     { std::next(argv), std::next(argv, argc) },
-							     true,// show help if requested
-							     version);
-  if(false)
-    for (auto const &arg : args) {
-      std::cout << arg.first << " = " << arg.second << std::endl;
-    }
-  if(args["print"].asBool()) {
-    const auto n = args["--nlines"] ? args["--nlines"].asLong() : -1;
-    const auto files = args["<file>"].asStringList();
-    for(const auto& file: files) {
-      process_print(file, n);
-    }
-  } else if(args["convert_csv"].asBool()) {
-    const auto files = args["<file>"].asStringList();
-    for(const auto& file: files) {
-      sas7bdat_to_csv(file);
-    }
+
+  if(argc == 4 && (!std::string(argv[1]).compare("print"))) {
+    const long int n = std::stoi(argv[2]);
+    const std::string file = argv[3];
+    process_print(file, n);
+  } else if(argc == 3 && (!std::string(argv[1]).compare("convert_csv"))) {
+    const std::string file = argv[2];
+    sas7bdat_to_csv(file);
+  }else{
+    std::cout << "Try Again..." << std::endl;
+    std::cout << "Options => {print <n_lines> <file_path>, convert_csv <file_path>}" << std::endl;
   }
   return 0;
 }

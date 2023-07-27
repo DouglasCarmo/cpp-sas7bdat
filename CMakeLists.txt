@@ -9,13 +9,8 @@ project(
   )
 
 file(WRITE version.txt ${PROJECT_VERSION})
-include(cmake/Sanitizers.cmake)
-include(cmake/StaticAnalyzers.cmake)
-include(cmake/CompilerWarnings.cmake)
-include(cmake/Cache.cmake)
 include(cmake/Linker.cmake)
 include(cmake/StandardProjectSettings.cmake)
-include(cmake/PreventInSourceBuilds.cmake)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(LIBRARY_TYPE STATIC CACHE STRING "type of library to make for lib_cppsas7bdat")
@@ -32,11 +27,8 @@ add_library(project_options INTERFACE)
 add_library(project_warnings INTERFACE)
 target_compile_features(project_options INTERFACE cxx_std_17)
 
-# Link this 'library' to use the warnings specified in CompilerWarnings.cmake
-# standard compiler warnings
+# standard linker
 configure_linker(project_options)
-set_project_warnings(project_warnings)
-enable_sanitizers(project_options)
 
 option(ENABLE_CONAN "Use Conan for dependency management" OFF)
 if(ENABLE_CONAN)
