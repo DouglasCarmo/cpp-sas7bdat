@@ -45,26 +45,9 @@ struct csv {
         first = false;
       else
         fmt::print(os, ",");
-      switch (column.type) {
-      case cppsas7bdat::Column::Type::string:
-        print(column.get_string(_p));
-        break;
-      case cppsas7bdat::Column::Type::integer:
-        print(column.get_integer(_p));
-        break;
-      case cppsas7bdat::Column::Type::number:
-        print(column.get_number(_p));
-        break;
-      case cppsas7bdat::Column::Type::datetime:
-        print(column.get_datetime(_p));
-        break;
-      case cppsas7bdat::Column::Type::date:
-        print(column.get_date(_p));
-        break;
-      case cppsas7bdat::Column::Type::time:
-        print(column.get_time(_p));
-        break;
-      }
+      
+      print(column.get_string(_p));
+      
     }
     fmt::print(os, "\n");
   }
