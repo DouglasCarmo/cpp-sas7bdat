@@ -64,10 +64,7 @@ struct csv {
         case cppsas7bdat::Column::Type::time:
           print(column.get_time(_p));
           break;
-        }
-      
-      print(column.get_string(_p));
-      
+        }      
     }
     fmt::print(os, "\n");
   }
