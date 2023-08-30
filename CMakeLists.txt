@@ -36,7 +36,7 @@ if(ENABLE_CONAN)
   run_conan()
 endif()
 
-find_package(Boost REQUIRED COMPONENTS date_time)
+find_package(Boost REQUIRED date_time REQUIRED)
 include_directories( ${Boost_INCLUDE_DIR} )
 add_subdirectory(src)
 add_subdirectory(apps)
